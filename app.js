@@ -26,6 +26,22 @@ $("#button_submit").on("click", function() {
 		"monthlyRate" : monthlyRate
 	});
 
+  displayEmployees();
 });
 
-var lastEmployee = function()
+var displayEmployees = function() {
+  database.ref().once("value", function(snapshot) {
+    var employees = snapshot.val();
+    
+    $.each(employees, function(index, value) {
+      $("tbody").append(`<tr>
+                           <td>${value.name}</td>
+                           <td>${value.role}</td>
+                           <td>${value.startDate}</td>
+                           <td></td>
+                           <td>${value.monthlyRate}</td>
+                           <td></td>
+                         </tr>`);
+    });
+  });
+}
